@@ -1,3 +1,3 @@
 # EasyMusic
 
-Android app that will learn you how to read sheet music. 
+Android app that will teach you how to read sheet music. 
