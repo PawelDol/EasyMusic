@@ -6,17 +6,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.media.MediaPlayer;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-public class PlayLevel extends AppCompatActivity implements View.OnClickListener{
+public class PlayLevel extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     MediaPlayer player;
     int curr_note = 0;
     char[] notes = {'c','d','e','f','g','a','b'};
     int lives = 3;
+    int cursor_pos = 0;
 
     // pobierz obraz w zależności od wybranego poziomu
     //Intent intent = getIntent();
@@ -56,10 +59,14 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
         ais.setOnClickListener(this);
         b.setOnClickListener(this);
 
-        //Button pause = findViewById(R.id.pause);
+        // ProgressBar life = findViewById(R.id.life);
+        // life.setMax(3);
+        // life.setProgress(lives);
+
+        Button pause = findViewById(R.id.pause);
     }
 
-   // ProgressBar life = findViewById(R.id.life);
+
 
     @Override
     public void onClick(View v) {
@@ -67,7 +74,6 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
             player.release();
             player = null;
         }
-
 
         switch(v.getId()){
             case R.id.c:
@@ -106,6 +112,7 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
         Button b = (Button)v;
         if (b.getText().toString().equals(String.format("%c",notes[curr_note]))) {
             curr_note++;
+            cursor_pos++;
         }
         else {
             lives--;
@@ -115,8 +122,35 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
 
     public void check_life() {
         if (lives == 0) {
-            Toast.makeText(this, "Koniec gry", Toast.LENGTH_SHORT).show();
+            Intent game_over = new Intent(PlayLevel.this, GameOver.class);
+            startActivity(game_over);
         }
     }
 
+    public void pause_menu(View v){
+        PopupMenu pause = new PopupMenu(this, v);
+        pause.setOnMenuItemClickListener(this);
+        pause.inflate((R.menu.pause_menu));
+        pause.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.again:
+                Intent play = new Intent(PlayLevel.this, PlayLevel.class);
+                startActivity(play);
+                return true;
+            case R.id.menu:
+                Intent menu = new Intent(PlayLevel.this, LevelMenu.class);
+                startActivity(menu);
+                return true;
+            case R.id.next:
+                //next level
+                return true;
+            default:
+                return false;
+        }
+    }
 }

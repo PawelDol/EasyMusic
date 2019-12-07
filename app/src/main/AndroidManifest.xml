@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".PlayLevel"
-            android:screenOrientation="landscape"
-            />
-        <activity android:name=".LevelMenu" />
+        <activity android:name=".GameOver"></activity>
         <activity
-            android:name=".Start">
+            android:name=".PlayLevel"
+            android:screenOrientation="landscape" />
+        <activity android:name=".LevelMenu" />
+        <activity android:name=".Start">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
