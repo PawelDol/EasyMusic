@@ -19,7 +19,7 @@ public class Start extends AppCompatActivity {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent menu = new Intent(Start.this, Menu.class);
+                Intent menu = new Intent(Start.this, LevelMenu.class);
                 startActivity(menu);
             }
         });

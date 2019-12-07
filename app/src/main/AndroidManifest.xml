@@ -13,7 +13,6 @@
             android:screenOrientation="landscape"
             />
         <activity android:name=".LevelMenu" />
-        <activity android:name=".Menu" />
         <activity
             android:name=".Start">
             <intent-filter>

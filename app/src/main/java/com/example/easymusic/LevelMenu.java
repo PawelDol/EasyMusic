@@ -15,11 +15,14 @@ public class LevelMenu extends AppCompatActivity {
         setContentView(R.layout.activity_level_menu);
 
         Button l1 = (Button)findViewById(R.id.l1);
+        final char notes[] = {'c','d','e','f','g','a','b'};
 
         l1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent play = new Intent(LevelMenu.this, PlayLevel.class);
+               // play.putExtra("pieciolinia", "@drawable/pieciolinia1");
+                play.putExtra("notes", notes);
                 startActivity(play);
             }
         });
