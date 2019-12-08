@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.media.MediaPlayer;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -17,15 +19,9 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
 
     MediaPlayer player;
     int curr_note = 0;
-    char[] notes = {'c','d','e','f','g','a','b'};
     int lives = 3;
-    int cursor_pos = 0;
-
-    // pobierz obraz w zależności od wybranego poziomu
-    //Intent intent = getIntent();
-
-    //String pieciolinia = intent.getStringExtra("pieciolinia");
-    //char notes[] = intent.getCharArrayExtra("notes");
+    int screen_width;
+    String[] level_notes = LevelMenu.notes[LevelMenu.wannaplay_level-1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +55,10 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
         ais.setOnClickListener(this);
         b.setOnClickListener(this);
 
-        // ProgressBar life = findViewById(R.id.life);
-        // life.setMax(3);
-        // life.setProgress(lives);
-
-        Button pause = findViewById(R.id.pause);
+        DisplayMetrics display = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(display);
+        screen_width = display.widthPixels;
     }
-
 
 
     @Override
@@ -79,8 +72,6 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
             case R.id.c:
                 player = MediaPlayer.create(this,R.raw.c);
                 player.start();
-                check_sound(v);
-                check_life();
                 break;
             case R.id.cis:
                 break;
@@ -106,17 +97,25 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
                 break;
         }
 
+        check_sound(v);
+        check_life();
+        check_finish();
+
     }
 
     public void check_sound(View v) {
         Button b = (Button)v;
-        if (b.getText().toString().equals(String.format("%c",notes[curr_note]))) {
+        ImageView cursor = findViewById(R.id.cursor);
+        if (b.getText().toString().equals(level_notes[curr_note])) {
             curr_note++;
-            cursor_pos++;
+            cursor.setX((curr_note)*screen_width/level_notes.length-5);
         }
         else {
+            ProgressBar life = findViewById(R.id.life);
+            life.setMax(3);
             lives--;
-            //life.setProgress(lives);
+            life.setProgress(lives);
+            Toast.makeText(this, "Wrong note!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -124,6 +123,16 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
         if (lives == 0) {
             Intent game_over = new Intent(PlayLevel.this, GameOver.class);
             startActivity(game_over);
+        }
+    }
+
+    public void check_finish() {
+        if ((curr_note) == level_notes.length) {
+            if (LevelMenu.unlocked_level == LevelMenu.wannaplay_level) {
+                LevelMenu.unlocked_level++;
+            }
+            Intent next = new Intent(PlayLevel.this, NextLevelMenu.class);
+            startActivity(next);
         }
     }
 
@@ -136,18 +145,15 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        Intent play = new Intent(PlayLevel.this, PlayLevel.class);
         switch (item.getItemId())
         {
             case R.id.again:
-                Intent play = new Intent(PlayLevel.this, PlayLevel.class);
                 startActivity(play);
                 return true;
             case R.id.menu:
                 Intent menu = new Intent(PlayLevel.this, LevelMenu.class);
                 startActivity(menu);
-                return true;
-            case R.id.next:
-                //next level
                 return true;
             default:
                 return false;

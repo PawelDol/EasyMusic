@@ -6,7 +6,4 @@
     <item android:id="@+id/menu"
         android:title = "Menu" />
 
-    <item android:id="@+id/next"
-        android:title = "Next Level" />
-
 </menu>
