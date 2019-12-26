@@ -10,11 +10,9 @@ import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,10 +22,10 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
     MediaPlayer player;
     int curr_note = 0;
     int screen_width;
-    String[] level_notes = LevelMenu.notes[LevelMenu.wannaplay_level-1];
+    public static String[] level_notes = LevelMenu.notes[LevelMenu.wannaplay_level-1];
     float location = 0;
-    int max_score;
-    int curr_score=0;
+    public static int max_score;
+    public static int curr_score=0;
     double note_loc;
 
     Handler handler = new Handler();
@@ -157,13 +155,19 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
 
     public void changeLoc(){
         ImageView cursor = findViewById(R.id.cursor);
+
         if (location < screen_width) location += screen_width/1000;
         else location=0;
 
         cursor.setX(location);
 
-        if (location>=screen_width) {
+        curr_note = Math.round((location/screen_width)*10)-1;
 
+        if (location>=screen_width) {
+            if(curr_score>max_score) max_score=curr_score;
+
+            Intent end = new Intent(FinalLevel.this, EndGame.class);
+            startActivity(end);
         }
     }
 
@@ -173,13 +177,8 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
 
         if(b.getText().equals(level_notes[curr_note])){
             curr_score++;
-            score.setText(String.format("%d/7",curr_score));
+            score.setText(String.format("%d/%d",curr_score, level_notes.length));
         }
-    }
-
-
-    public void check_finish() {
-
     }
 
     public void pause_menu(View v){
@@ -194,7 +193,7 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
         Intent play = new Intent(FinalLevel.this, PlayLevel.class);
         switch (item.getItemId())
         {
-            case R.id.again:
+            case R.id.more:
                 startActivity(play);
                 return true;
             case R.id.menu:

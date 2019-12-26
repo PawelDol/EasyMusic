@@ -15,7 +15,7 @@ public class NextLevelMenu extends AppCompatActivity {
         setContentView(R.layout.activity_next_level_menu);
 
         Button menu = findViewById(R.id.menu);
-        Button again = findViewById(R.id.again);
+        Button again = findViewById(R.id.more);
         Button next = findViewById(R.id.next);
 
         menu.setOnClickListener(new View.OnClickListener() {

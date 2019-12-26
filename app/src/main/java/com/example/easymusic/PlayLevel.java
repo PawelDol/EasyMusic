@@ -181,7 +181,7 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
         Intent play = new Intent(PlayLevel.this, PlayLevel.class);
         switch (item.getItemId())
         {
-            case R.id.again:
+            case R.id.more:
                 startActivity(play);
                 return true;
             case R.id.menu:
