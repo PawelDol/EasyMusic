@@ -27,11 +27,14 @@ public class NextLevelMenu extends AppCompatActivity {
         });
 
         final Intent play = new Intent(NextLevelMenu.this, PlayLevel.class);
+        final Intent final_l = new Intent(NextLevelMenu.this, FinalLevel.class);
+
         again.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                startActivity(play);
+        // tu nie dziala
+                if (LevelMenu.wannaplay_level<6) startActivity(play);
+                else startActivity(final_l);
             }
         });
 
@@ -39,7 +42,8 @@ public class NextLevelMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 LevelMenu.wannaplay_level++;
-                startActivity(play);
+                if (LevelMenu.wannaplay_level<5) startActivity(play);
+                else startActivity(final_l);
             }
         });
     }

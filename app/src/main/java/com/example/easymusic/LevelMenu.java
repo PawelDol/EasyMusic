@@ -10,9 +10,10 @@ import android.widget.Toast;
 
 public class LevelMenu extends AppCompatActivity implements View.OnClickListener {
 
-    public static int unlocked_level = 1; // to będzie z pliku mam nadzieje
+    public static int unlocked_level = 5; // to będzie z pliku mam nadzieje
     public static int wannaplay_level;
-    public static String[][] notes = {{"c","d","e","f","g","a","b"},{"cis","dis","fis","gis","ais"}};
+    public static String[][] notes = {{"c","d","e","f","g","a","b"},{"cis","dis","f","fis","gis","ais"},
+            {"cis","d","f","fis","g","ais","b"}, {"d","fis","a","b","gis","f","a","fis"},{"c","d","e","f","g","a","b"}};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,8 @@ public class LevelMenu extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         Intent play = new Intent(LevelMenu.this, PlayLevel.class);
+        Intent final_l = new Intent(LevelMenu.this, FinalLevel.class);
+
         switch(v.getId()){
             case R.id.l1:
                 wannaplay_level = 1;
@@ -54,7 +57,8 @@ public class LevelMenu extends AppCompatActivity implements View.OnClickListener
         }
 
         if (wannaplay_level<=unlocked_level) {
-            startActivity(play);
+            if (wannaplay_level != 5) startActivity(play);
+            else startActivity(final_l);
         }
         else Toast.makeText(this, "You have to pass previous level first!", Toast.LENGTH_SHORT).show();
 

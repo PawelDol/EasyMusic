@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".NextLevelMenu"></activity>
+        <activity android:name=".FinalLevel"></activity>
+        <activity android:name=".NextLevelMenu" />
         <activity android:name=".GameOver" />
         <activity
             android:name=".PlayLevel"

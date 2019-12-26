@@ -5,29 +5,39 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class PlayLevel extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class FinalLevel extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     MediaPlayer player;
     int curr_note = 0;
-    int lives = 3;
     int screen_width;
     String[] level_notes = LevelMenu.notes[LevelMenu.wannaplay_level-1];
     float location = 0;
+    int max_score;
+    int curr_score=0;
+    double note_loc;
+
+    Handler handler = new Handler();
+    Timer timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_play_level);
+        setContentView(R.layout.activity_final_level);
 
         Button c = findViewById(R.id.c);
         Button cis = findViewById(R.id.cis);
@@ -78,6 +88,19 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
         DisplayMetrics display = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(display);
         screen_width = display.widthPixels;
+        note_loc = 0.12*screen_width;
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        changeLoc();
+                    }
+                });
+            }
+        },0,10);
     }
 
 
@@ -128,45 +151,35 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
         }
         player.start();
 
-        check_sound(v);
-        check_life();
-        check_finish();
 
+        check_sound(v);
+    }
+
+    public void changeLoc(){
+        ImageView cursor = findViewById(R.id.cursor);
+        if (location < screen_width) location += screen_width/1000;
+        else location=0;
+
+        cursor.setX(location);
+
+        if (location>=screen_width) {
+
+        }
     }
 
     public void check_sound(View v) {
         Button b = (Button)v;
-        ImageView cursor = findViewById(R.id.cursor);
-        ProgressBar life = findViewById(R.id.life);
+        TextView score = findViewById(R.id.score);
 
-        if (b.getText().equals(level_notes[curr_note])) {
-            curr_note++;
-            location = cursor.getX();
-            if ((curr_note)%4==0) cursor.setX(location + 14*screen_width/100);
-            else cursor.setX(location + 10 *screen_width/100);
-        }
-        else {
-            lives--;
-            life.setProgress(lives);
-            Toast.makeText(this, "Wrong note!", Toast.LENGTH_SHORT).show();
+        if(b.getText().equals(level_notes[curr_note])){
+            curr_score++;
+            score.setText(String.format("%d/7",curr_score));
         }
     }
 
-    public void check_life() {
-        if (lives == 0) {
-            Intent game_over = new Intent(PlayLevel.this, GameOver.class);
-            startActivity(game_over);
-        }
-    }
 
     public void check_finish() {
-        if ((curr_note) == level_notes.length) {
-            if (LevelMenu.unlocked_level == LevelMenu.wannaplay_level) {
-                LevelMenu.unlocked_level++;
-            }
-            Intent next = new Intent(PlayLevel.this, NextLevelMenu.class);
-            startActivity(next);
-        }
+
     }
 
     public void pause_menu(View v){
@@ -178,14 +191,14 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        Intent play = new Intent(PlayLevel.this, PlayLevel.class);
+        Intent play = new Intent(FinalLevel.this, PlayLevel.class);
         switch (item.getItemId())
         {
             case R.id.again:
                 startActivity(play);
                 return true;
             case R.id.menu:
-                Intent menu = new Intent(PlayLevel.this, LevelMenu.class);
+                Intent menu = new Intent(FinalLevel.this, LevelMenu.class);
                 startActivity(menu);
                 return true;
             default:
