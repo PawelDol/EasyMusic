@@ -15,7 +15,7 @@ public class NextLevelMenu extends AppCompatActivity {
         setContentView(R.layout.activity_next_level_menu);
 
         Button menu = findViewById(R.id.menu);
-        Button again = findViewById(R.id.more);
+        Button again = findViewById(R.id.again);
         Button next = findViewById(R.id.next);
 
         menu.setOnClickListener(new View.OnClickListener() {
@@ -32,9 +32,8 @@ public class NextLevelMenu extends AppCompatActivity {
         again.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-        // tu nie dziala
-                if (LevelMenu.wannaplay_level<6) startActivity(play);
-                else startActivity(final_l);
+                startActivity(play);
+
             }
         });
 

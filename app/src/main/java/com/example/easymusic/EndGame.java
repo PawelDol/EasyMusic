@@ -2,7 +2,10 @@ package com.example.easymusic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,11 +16,28 @@ public class EndGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_game);
 
-        Button more = findViewById(R.id.more);
+        Button more = findViewById(R.id.again);
         Button menu = findViewById(R.id.menu);
 
         TextView score = findViewById(R.id.end2);
-        score.setText(String.format("Score: %d/%d",FinalLevel.curr_score,FinalLevel.level_notes.length));
+        score.setText(String.format("Score: %d/13",FinalLevel.curr_score));
+
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent link = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.musictheory.net/lessons"));
+                startActivity(link);
+            }
+        });
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent level_menu = new Intent(EndGame.this, LevelMenu.class);
+                startActivity(level_menu);
+            }
+        });
+
 
     }
 }

@@ -22,11 +22,12 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
     MediaPlayer player;
     int curr_note = 0;
     int screen_width;
-    public static String[] level_notes = LevelMenu.notes[LevelMenu.wannaplay_level-1];
+    String[] level_notes;
     float location = 0;
     public static int max_score;
-    public static int curr_score=0;
-    double note_loc;
+    public static int curr_score;
+    int segment;    // two segment level
+    int flag = 0;   // don't let player gain multiple points for one note
 
     Handler handler = new Handler();
     Timer timer = new Timer();
@@ -36,6 +37,11 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_final_level);
+
+        curr_score=0;
+        segment = 1;
+        level_notes = LevelMenu.notes[LevelMenu.wannaplay_level-1];
+
 
         Button c = findViewById(R.id.c);
         Button cis = findViewById(R.id.cis);
@@ -86,7 +92,6 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
         DisplayMetrics display = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(display);
         screen_width = display.widthPixels;
-        note_loc = 0.12*screen_width;
 
         timer.schedule(new TimerTask() {
             @Override
@@ -149,25 +154,40 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
         }
         player.start();
 
-
-        check_sound(v);
+        // check sound only when are notes left to play
+        if (curr_note<level_notes.length&&curr_note>=0) check_sound(v);
     }
 
     public void changeLoc(){
         ImageView cursor = findViewById(R.id.cursor);
 
-        if (location < screen_width) location += screen_width/1000;
-        else location=0;
+        location += screen_width/1000;
 
         cursor.setX(location);
 
         curr_note = Math.round((location/screen_width)*10)-1;
+        TextView note = findViewById(R.id.score2);
+
+        note.setText(String.format("%d", curr_note));
+
+        if(curr_note!=(Math.round((location+screen_width/1000)/screen_width*10)-1)) flag = 0;
 
         if (location>=screen_width) {
-            if(curr_score>max_score) max_score=curr_score;
 
-            Intent end = new Intent(FinalLevel.this, EndGame.class);
-            startActivity(end);
+            if(segment == 1) {
+                ImageView notes = findViewById(R.id.imageView);
+                notes.setImageResource(R.drawable.sheet2);
+                location = 0;
+                level_notes = LevelMenu.notes[LevelMenu.wannaplay_level];
+
+                segment = 2;
+            }
+            else if (segment == 2) {
+                if(curr_score>max_score) max_score=curr_score;
+                timer.cancel();
+                Intent end = new Intent(FinalLevel.this, EndGame.class);
+                startActivity(end);
+            }
         }
     }
 
@@ -176,8 +196,12 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
         TextView score = findViewById(R.id.score);
 
         if(b.getText().equals(level_notes[curr_note])){
-            curr_score++;
-            score.setText(String.format("%d/%d",curr_score, level_notes.length));
+            if(flag == 0) {
+                curr_score++;
+                flag = 1;
+            }
+
+            score.setText(String.format("%d/13",curr_score));
         }
     }
 
@@ -190,11 +214,15 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        Intent play = new Intent(FinalLevel.this, PlayLevel.class);
+        Intent final_l = new Intent(FinalLevel.this, FinalLevel.class);
+        timer.cancel();
+        curr_score = 0;
+
         switch (item.getItemId())
         {
-            case R.id.more:
-                startActivity(play);
+            case R.id.again:
+                level_notes = LevelMenu.notes[LevelMenu.wannaplay_level-1];
+                startActivity(final_l);
                 return true;
             case R.id.menu:
                 Intent menu = new Intent(FinalLevel.this, LevelMenu.class);

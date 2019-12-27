@@ -15,7 +15,7 @@ public class GameOver extends AppCompatActivity {
         setContentView(R.layout.activity_game_over);
 
         Button menu = findViewById(R.id.menu);
-        Button again = findViewById(R.id.more);
+        Button again = findViewById(R.id.again);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
