@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class LevelMenu extends AppCompatActivity implements View.OnClickListener {
 
-    public static int unlocked_level = 1; // to będzie z pliku mam nadzieje
+    public static int unlocked_level = 6; // to będzie z pliku mam nadzieje
     public static int wannaplay_level;
     public static String[][] notes = {{"c","d","e","f","g","a","b"},{"cis","dis","f","fis","gis","ais"},
             {"cis","d","f","fis","g","ais","b"}, {"d","fis","a","b","gis","f","a","fis"},{"c","d","e","f","g","a","b"},{"cis","dis","f","fis","gis","ais"}};
