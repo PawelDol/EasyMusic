@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".EndGame"></activity>
+        <activity android:name=".Info"></activity>
+        <activity android:name=".EndGame" />
         <activity android:name=".FinalLevel" />
         <activity android:name=".NextLevelMenu" />
         <activity android:name=".GameOver" />

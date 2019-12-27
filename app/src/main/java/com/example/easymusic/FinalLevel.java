@@ -25,9 +25,11 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
     String[] level_notes;
     float location = 0;
     public static int max_score;
-    public static int curr_score;
+    int curr_score;
+    public static int recent_score;
+
     int segment;    // two segment level
-    int flag = 0;   // don't let player gain multiple points for one note
+    int flag = 0;   // player cant't gain multiple points for one note
 
     Handler handler = new Handler();
     Timer timer = new Timer();
@@ -154,8 +156,7 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
         }
         player.start();
 
-        // check sound only when are notes left to play
-        if (curr_note<level_notes.length&&curr_note>=0) check_sound(v);
+        if (curr_note<level_notes.length&&curr_note>=0) check_sound(v); // check sound only when are notes left to play
     }
 
     public void changeLoc(){
@@ -184,6 +185,8 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
             }
             else if (segment == 2) {
                 if(curr_score>max_score) max_score=curr_score;
+                recent_score=curr_score;
+                LevelMenu.unlocked_level++;
                 timer.cancel();
                 Intent end = new Intent(FinalLevel.this, EndGame.class);
                 startActivity(end);
@@ -202,6 +205,7 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
             }
 
             score.setText(String.format("%d/13",curr_score));
+
         }
     }
 

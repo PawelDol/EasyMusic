@@ -20,7 +20,10 @@ public class EndGame extends AppCompatActivity {
         Button menu = findViewById(R.id.menu);
 
         TextView score = findViewById(R.id.end2);
-        score.setText(String.format("Score: %d/13",FinalLevel.curr_score));
+        score.setText(String.format("Recent score: %d/13", FinalLevel.recent_score));
+
+        TextView max = findViewById(R.id.end3);
+        max.setText(String.format("Max score: %d/13", FinalLevel.max_score));
 
         more.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,7 +40,5 @@ public class EndGame extends AppCompatActivity {
                 startActivity(level_menu);
             }
         });
-
-
     }
 }

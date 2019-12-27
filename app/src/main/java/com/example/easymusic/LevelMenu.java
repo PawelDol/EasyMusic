@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class LevelMenu extends AppCompatActivity implements View.OnClickListener {
 
-    public static int unlocked_level = 5; // to będzie z pliku mam nadzieje
+    public static int unlocked_level = 1; // to będzie z pliku mam nadzieje
     public static int wannaplay_level;
     public static String[][] notes = {{"c","d","e","f","g","a","b"},{"cis","dis","f","fis","gis","ais"},
             {"cis","d","f","fis","g","ais","b"}, {"d","fis","a","b","gis","f","a","fis"},{"c","d","e","f","g","a","b"},{"cis","dis","f","fis","gis","ais"}};
@@ -20,12 +20,16 @@ public class LevelMenu extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_menu);
 
+        Button start = findViewById(R.id.start);
+        Button end = findViewById(R.id.end);
         Button l1 = findViewById(R.id.l1);
         Button l2 = findViewById(R.id.l2);
         Button l3 = findViewById(R.id.l3);
         Button l4 = findViewById(R.id.l4);
         Button l5 = findViewById(R.id.l5);
 
+        start.setOnClickListener(this);
+        end.setOnClickListener(this);
         l1.setOnClickListener(this);
         l2.setOnClickListener(this);
         l3.setOnClickListener(this);
@@ -37,6 +41,8 @@ public class LevelMenu extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         Intent play = new Intent(LevelMenu.this, PlayLevel.class);
         Intent final_l = new Intent(LevelMenu.this, FinalLevel.class);
+        Intent info = new Intent(LevelMenu.this, Info.class);
+        Intent end = new Intent(LevelMenu.this, EndGame.class);
 
         switch(v.getId()){
             case R.id.l1:
@@ -54,11 +60,19 @@ public class LevelMenu extends AppCompatActivity implements View.OnClickListener
             case R.id.l5:
                 wannaplay_level = 5;
                 break;
+            case R.id.start:
+                wannaplay_level = 0;
+                break;
+            case R.id.end:
+                wannaplay_level = 6;
+                break;
         }
 
         if (wannaplay_level<=unlocked_level) {
-            if (wannaplay_level != 5) startActivity(play);
-            else startActivity(final_l);
+            if (wannaplay_level == 0) startActivity(info);
+            else if (wannaplay_level == 6) startActivity(end);
+            else if (wannaplay_level == 5) startActivity(final_l);
+            else startActivity(play);
         }
         else Toast.makeText(this, "You have to pass previous level first!", Toast.LENGTH_SHORT).show();
 
