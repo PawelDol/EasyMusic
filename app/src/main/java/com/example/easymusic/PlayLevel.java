@@ -3,6 +3,7 @@ package com.example.easymusic;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.media.MediaPlayer;
 import android.util.DisplayMetrics;
@@ -59,10 +60,10 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
 
         switch(LevelMenu.wannaplay_level) {
             case 1:
-                notes.setImageResource(R.drawable.sheet1);
+                notes.setImageResource(R.drawable.sheet0);
                 break;
             case 2:
-                notes.setImageResource(R.drawable.sheet2);
+                notes.setImageResource(R.drawable.sheet01);
                 break;
             case 3:
                 notes.setImageResource(R.drawable.sheet3);
@@ -142,8 +143,7 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
         if (b.getText().equals(level_notes[curr_note])) {
             curr_note++;
             location = cursor.getX();
-            if ((curr_note)%4==0) cursor.setX(location + 14*screen_width/100);
-            else cursor.setX(location + 10 *screen_width/100);
+            cursor.setX(location + 105 *screen_width/1000);
         }
         else {
             lives--;
@@ -163,6 +163,12 @@ public class PlayLevel extends AppCompatActivity implements View.OnClickListener
         if ((curr_note) == level_notes.length) {
             if (LevelMenu.unlocked_level == LevelMenu.wannaplay_level) {
                 LevelMenu.unlocked_level++;
+
+                //save unlocked levels to file
+                SharedPreferences unl_level = getSharedPreferences(LevelMenu.DATA, 0);
+                SharedPreferences.Editor editor = unl_level.edit();
+                editor.putInt("unlocked_level", LevelMenu.unlocked_level);
+                editor.commit();
             }
             Intent next = new Intent(PlayLevel.this, NextLevelMenu.class);
             startActivity(next);

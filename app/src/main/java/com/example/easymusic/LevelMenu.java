@@ -3,6 +3,7 @@ package com.example.easymusic;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,10 +11,12 @@ import android.widget.Toast;
 
 public class LevelMenu extends AppCompatActivity implements View.OnClickListener {
 
-    public static int unlocked_level = 6; // to będzie z pliku mam nadzieje
+    public static final String DATA = "DataFile";
+    public static int unlocked_level=1;
     public static int wannaplay_level;
     public static String[][] notes = {{"c","d","e","f","g","a","b"},{"cis","dis","f","fis","gis","ais"},
-            {"cis","d","f","fis","g","ais","b"}, {"d","fis","a","b","gis","f","a","fis"},{"c","d","e","f","g","a","b"},{"cis","dis","f","fis","gis","ais"}};
+            {"cis","d","f","fis","g","ais","b"}, {"d","fis","a","b","gis","f","a","fis"},
+            {"e","cis","e","fis","a","e","fis","e"},{"a","e","fis","gis","b","e","a","fis"}};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,9 @@ public class LevelMenu extends AppCompatActivity implements View.OnClickListener
         l3.setOnClickListener(this);
         l4.setOnClickListener(this);
         l5.setOnClickListener(this);
+
+        SharedPreferences unl_level = getSharedPreferences(DATA, 0);
+        unlocked_level = unl_level.getInt("unlocked_level", unlocked_level);
     }
 
     @Override
@@ -74,7 +80,7 @@ public class LevelMenu extends AppCompatActivity implements View.OnClickListener
             else if (wannaplay_level == 5) startActivity(final_l);
             else startActivity(play);
         }
-        else Toast.makeText(this, "You have to pass previous level first!", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(this, "You have to pass previous level!", Toast.LENGTH_SHORT).show();
 
     }
 }

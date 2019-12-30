@@ -3,6 +3,7 @@ package com.example.easymusic;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -40,7 +41,7 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
 
         setContentView(R.layout.activity_final_level);
 
-        curr_score=0;
+        curr_score =  0;
         segment = 1;
         level_notes = LevelMenu.notes[LevelMenu.wannaplay_level-1];
 
@@ -87,7 +88,7 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
                 notes.setImageResource(R.drawable.sheet4);
                 break;
             case 5:
-                notes.setImageResource(R.drawable.sheet1);
+                notes.setImageResource(R.drawable.sheet5_1);
                 break;
         }
 
@@ -166,10 +167,7 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
 
         cursor.setX(location);
 
-        curr_note = Math.round((location/screen_width)*10)-1;
-        TextView note = findViewById(R.id.score2);
-
-        note.setText(String.format("%d", curr_note));
+        if (curr_note < level_notes.length) curr_note = Math.round((location/screen_width)*10)-1;
 
         if(curr_note!=(Math.round((location+screen_width/1000)/screen_width*10)-1)) flag = 0;
 
@@ -177,8 +175,9 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
 
             if(segment == 1) {
                 ImageView notes = findViewById(R.id.imageView);
-                notes.setImageResource(R.drawable.sheet2);
+                notes.setImageResource(R.drawable.sheet5_2);
                 location = 0;
+                curr_note = 0;
                 level_notes = LevelMenu.notes[LevelMenu.wannaplay_level];
 
                 segment = 2;
@@ -187,6 +186,25 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
                 if(curr_score>max_score) max_score=curr_score;
                 recent_score=curr_score;
                 LevelMenu.unlocked_level++;
+
+                // save maximum score to file
+                SharedPreferences m_score = getSharedPreferences(LevelMenu.DATA, 0);
+                SharedPreferences.Editor editor0 = m_score.edit();
+                editor0.putInt("max_score", max_score);
+                editor0.commit();
+
+                // save recent score to file
+                SharedPreferences rec_score = getSharedPreferences(LevelMenu.DATA, 0);
+                SharedPreferences.Editor editor1 = rec_score.edit();
+                editor1.putInt("recent_score", recent_score);
+                editor1.commit();
+
+                // save unlocked levels to file
+                SharedPreferences unl_level = getSharedPreferences(LevelMenu.DATA, 0);
+                SharedPreferences.Editor editor2 = unl_level.edit();
+                editor2.putInt("unlocked_level", LevelMenu.unlocked_level);
+                editor2.commit();
+
                 timer.cancel();
                 Intent end = new Intent(FinalLevel.this, EndGame.class);
                 startActivity(end);
@@ -204,7 +222,7 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
                 flag = 1;
             }
 
-            score.setText(String.format("%d/13",curr_score));
+            score.setText(String.format("%d/15",curr_score));
 
         }
     }
