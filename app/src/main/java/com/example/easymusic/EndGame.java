@@ -27,10 +27,10 @@ public class EndGame extends AppCompatActivity {
         FinalLevel.max_score = m_score.getInt("max_score", FinalLevel.max_score);
 
         TextView score = findViewById(R.id.end2);
-        score.setText(String.format("Recent score: %d/15", FinalLevel.recent_score));
+        score.setText(String.format("Recent score: %d/16", FinalLevel.recent_score));
 
         TextView max = findViewById(R.id.end3);
-        max.setText(String.format("Max score: %d/15", FinalLevel.max_score));
+        max.setText(String.format("Max score: %d/16", FinalLevel.max_score));
 
         more.setOnClickListener(new View.OnClickListener() {
             @Override
