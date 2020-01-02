@@ -117,7 +117,7 @@ public class FinalLevel extends Level {
                 flag = 1;
             }
 
-            score.setText(String.format("%d/15",curr_score));
+            score.setText(String.format("%d/16",curr_score));
 
         }
     }
