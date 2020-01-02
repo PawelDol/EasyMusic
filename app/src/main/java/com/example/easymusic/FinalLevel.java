@@ -1,30 +1,20 @@
 package com.example.easymusic;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.media.MediaPlayer;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class FinalLevel extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+public class FinalLevel extends Level {
 
-    MediaPlayer player;
-    int curr_note = 0;
-    int screen_width;
-    String[] level_notes;
-    float location = 0;
     public static int max_score;
     int curr_score;
     public static int recent_score;
@@ -45,56 +35,7 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
         segment = 1;
         level_notes = LevelMenu.notes[LevelMenu.wannaplay_level-1];
 
-
-        Button c = findViewById(R.id.c);
-        Button cis = findViewById(R.id.cis);
-        Button d = findViewById(R.id.d);
-        Button dis = findViewById(R.id.dis);
-        Button e = findViewById(R.id.e);
-        Button f = findViewById(R.id.f);
-        Button fis = findViewById(R.id.fis);
-        Button g = findViewById(R.id.g);
-        Button gis = findViewById(R.id.gis);
-        Button a = findViewById(R.id.a);
-        Button ais = findViewById(R.id.ais);
-        Button b = findViewById(R.id.b);
-
-        c.setOnClickListener(this);
-        cis.setOnClickListener(this);
-        d.setOnClickListener(this);
-        dis.setOnClickListener(this);
-        e.setOnClickListener(this);
-        f.setOnClickListener(this);
-        fis.setOnClickListener(this);
-        g.setOnClickListener(this);
-        gis.setOnClickListener(this);
-        a.setOnClickListener(this);
-        ais.setOnClickListener(this);
-        b.setOnClickListener(this);
-
-        ImageView notes = findViewById(R.id.imageView);
-
-        switch(LevelMenu.wannaplay_level) {
-            case 1:
-                notes.setImageResource(R.drawable.sheet1);
-                break;
-            case 2:
-                notes.setImageResource(R.drawable.sheet2);
-                break;
-            case 3:
-                notes.setImageResource(R.drawable.sheet3);
-                break;
-            case 4:
-                notes.setImageResource(R.drawable.sheet4);
-                break;
-            case 5:
-                notes.setImageResource(R.drawable.sheet5_1);
-                break;
-        }
-
-        DisplayMetrics display = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(display);
-        screen_width = display.widthPixels;
+        init_level();
 
         timer.schedule(new TimerTask() {
             @Override
@@ -109,54 +50,8 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
         },0,10);
     }
 
-
     @Override
-    public void onClick(View v) {
-        if (player != null) {
-            player.release();
-            player = null;
-        }
-
-        switch(v.getId()){
-            case R.id.c:
-                player = MediaPlayer.create(this,R.raw.c);
-                break;
-            case R.id.cis:
-                player = MediaPlayer.create(this,R.raw.cis);
-                break;
-            case R.id.d:
-                player = MediaPlayer.create(this,R.raw.d);
-                break;
-            case R.id.dis:
-                player = MediaPlayer.create(this,R.raw.dis);
-                break;
-            case R.id.e:
-                player = MediaPlayer.create(this,R.raw.e);
-                break;
-            case R.id.f:
-                player = MediaPlayer.create(this,R.raw.f);
-                break;
-            case R.id.fis:
-                player = MediaPlayer.create(this,R.raw.fis);
-                break;
-            case R.id.g:
-                player = MediaPlayer.create(this,R.raw.g);
-                break;
-            case R.id.gis:
-                player = MediaPlayer.create(this,R.raw.gis);
-                break;
-            case R.id.a:
-                player = MediaPlayer.create(this,R.raw.a);
-                break;
-            case R.id.ais:
-                player = MediaPlayer.create(this,R.raw.ais);
-                break;
-            case R.id.b:
-                player = MediaPlayer.create(this,R.raw.b);
-                break;
-        }
-        player.start();
-
+    public void check(View v) {
         if (curr_note<level_notes.length&&curr_note>=0) check_sound(v); // check sound only when are notes left to play
     }
 
@@ -227,13 +122,6 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void pause_menu(View v){
-        PopupMenu pause = new PopupMenu(this, v);
-        pause.setOnMenuItemClickListener(this);
-        pause.inflate((R.menu.pause_menu));
-        pause.show();
-    }
-
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         Intent final_l = new Intent(FinalLevel.this, FinalLevel.class);
@@ -254,4 +142,5 @@ public class FinalLevel extends AppCompatActivity implements View.OnClickListene
                 return false;
         }
     }
+
 }

@@ -9,11 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Info"
-            android:screenOrientation="landscape">
-        </activity>
+        <activity android:name=".Level"></activity>
+        <activity
+            android:name=".Info"
+            android:screenOrientation="landscape"></activity>
         <activity android:name=".EndGame" />
-        <activity android:name=".FinalLevel"
+        <activity
+            android:name=".FinalLevel"
             android:screenOrientation="landscape" />
         <activity android:name=".NextLevelMenu" />
         <activity android:name=".GameOver" />
@@ -24,6 +26,7 @@
         <activity android:name=".Start">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
