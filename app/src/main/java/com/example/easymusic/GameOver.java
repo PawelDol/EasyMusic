@@ -7,8 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/** menu opcji po przegranym poziomie */
 public class GameOver extends AppCompatActivity {
 
+    /**
+     * generuj układ graficzny,
+     * wykonaj odpowiednią akcję w zależności od wybranej opcji
+     * @param savedInstanceState informacje o stanie instancji
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +23,7 @@ public class GameOver extends AppCompatActivity {
         Button menu = findViewById(R.id.menu);
         Button again = findViewById(R.id.again);
 
+        // przejdź do menu głównego
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -25,6 +32,7 @@ public class GameOver extends AppCompatActivity {
             }
         });
 
+        // powtórz poziom
         again.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -7,8 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+/** wyświetlanie ekranu startowego */
 public class Start extends AppCompatActivity {
 
+    /**
+     * generuj układ graficzny
+     * przekieruj gracza do menu głównego po kliknięciu w logo gry
+     * @param savedInstanceState informacje o stanie instancji
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

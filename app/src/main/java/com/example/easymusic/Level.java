@@ -11,15 +11,30 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 
+/** główna struktura każdego poziomu */
 public class Level extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
+    /** odtwarzacz dźwięków pianina */
     MediaPlayer player;
+
+    /** aktualny dźwięk */
     int curr_note = 0;
 
+    /** szerokość ekranu smartfona */
     int screen_width;
+
+    /** nuty w aktualnym poziomie */
     String[] level_notes = LevelMenu.notes[LevelMenu.wannaplay_level-1];
+
+    /** aktualna lokalizacja kursora */
     float location = 0;
 
+    /**
+     * inicjacja poziomu:
+     * definicja klawiszy pianina,
+     * ustalenie obrazu z zapisem nutowym w zależności od wybranego poziomu,
+     * odczytanie szerokości ekranu
+     */
     public void init_level() {
         Button c = findViewById(R.id.c);
         Button cis = findViewById(R.id.cis);
@@ -47,6 +62,7 @@ public class Level extends AppCompatActivity implements View.OnClickListener, Po
         ais.setOnClickListener(this);
         b.setOnClickListener(this);
 
+        // ustal obraz z zapisem nutowym w zależności od wybranego poziomu
         ImageView notes = findViewById(R.id.imageView);
 
         switch(LevelMenu.wannaplay_level) {
@@ -67,11 +83,17 @@ public class Level extends AppCompatActivity implements View.OnClickListener, Po
                 break;
         }
 
+        // pobierz szerokość ekranu smartfona
         DisplayMetrics display = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(display);
         screen_width = display.widthPixels;
     }
 
+    /**
+     * odtworzenie dźwięku naciśniętego klawisza,
+     * wywołanie funkcji sprawdzającej
+     * @param v naciśnięty klawisz
+     */
     @Override
     public void onClick(View v) {
         if (player != null) {
@@ -122,8 +144,16 @@ public class Level extends AppCompatActivity implements View.OnClickListener, Po
         check(v);
     }
 
+    /**
+     * funkcja sprawdzająca
+     * @param v naciśnięty klawisz
+     */
     public void check(View v){}
 
+    /**
+     * utworzenie oraz uruchomienie menu pauzy
+     * @param v naciśnięty przycisk
+     */
     public void pause_menu(View v){
         PopupMenu pause = new PopupMenu(this, v);
         pause.setOnMenuItemClickListener(this);
@@ -131,14 +161,21 @@ public class Level extends AppCompatActivity implements View.OnClickListener, Po
         pause.show();
     }
 
+    /**
+     * uruchomienie dopowiedniej aktywności w zależności od wybranej opcji
+     * @param item opcja wybrana w menu
+     * @return true jeżeli wybrano opcję z menu
+     */
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         Intent play = new Intent(Level.this, PlayLevel.class);
         switch (item.getItemId())
         {
+            // uruchom poziom ponownie
             case R.id.again:
                 startActivity(play);
                 return true;
+            // przejdź do menu głównego
             case R.id.menu:
                 Intent menu = new Intent(Level.this, LevelMenu.class);
                 startActivity(menu);

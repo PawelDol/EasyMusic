@@ -9,15 +9,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+/** menu główne, wybór poziomu */
 public class LevelMenu extends AppCompatActivity implements View.OnClickListener {
 
+    /** plik przchowujący dane */
     public static final String DATA = "DataFile";
+
+    /** liczba aktualnie odblokowanych pozimów */
     public static int unlocked_level=1;
+
+    /** numer aktualnie wybranego poziomu */
     public static int wannaplay_level;
+
+    /** zmienna przechowująca nazwy dźwięków znajdujących się w każdym poziomie */
     public static String[][] notes = {{"c","d","e","f","g","a","b"},{"cis","dis","f","fis","gis","ais"},
             {"cis","d","f","fis","g","ais","b"}, {"d","fis","a","b","gis","f","a","fis"},
             {"e","cis","e","fis","a","e","fis","e"},{"a","e","fis","gis","b","e","a","fis"}};
 
+    /**
+     * generuj układ graficzny,
+     * definicja przycisków i odczytanie danych z pliku
+     * @param savedInstanceState informacje o stanie instancji
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +52,15 @@ public class LevelMenu extends AppCompatActivity implements View.OnClickListener
         l4.setOnClickListener(this);
         l5.setOnClickListener(this);
 
+        // odczytaj z pliku informację o liczbie odblokowanych poziomów
         SharedPreferences unl_level = getSharedPreferences(DATA, 0);
         unlocked_level = unl_level.getInt("unlocked_level", unlocked_level);
     }
 
+    /**
+     * przejdź do odpowiedniej aktywności w zależności od wciśniętego przycisku
+     * @param v naciśnięty przycisk
+     */
     @Override
     public void onClick(View v) {
         Intent play = new Intent(LevelMenu.this, PlayLevel.class);
@@ -74,12 +92,14 @@ public class LevelMenu extends AppCompatActivity implements View.OnClickListener
                 break;
         }
 
+        // uruchom poziom tylko jeżeli jest odblokowany
         if (wannaplay_level<=unlocked_level) {
             if (wannaplay_level == 0) startActivity(info);
             else if (wannaplay_level == 6) startActivity(end);
             else if (wannaplay_level == 5) startActivity(final_l);
             else startActivity(play);
         }
+        // wyświetl komunikat jeżeli nie jest
         else Toast.makeText(this, "You have to pass previous level!", Toast.LENGTH_SHORT).show();
 
     }
