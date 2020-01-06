@@ -11,8 +11,8 @@ import android.widget.ImageView;
 public class Start extends AppCompatActivity {
 
     /**
-     * generuj układ graficzny
-     * przekieruj gracza do menu głównego po kliknięciu w logo gry
+     * generuje układ graficzny,
+     * przekierowuje gracza do menu głównego po kliknięciu w logo gry
      * @param savedInstanceState informacje o stanie instancji
      */
     @Override

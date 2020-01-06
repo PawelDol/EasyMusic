@@ -14,9 +14,9 @@ import android.widget.TextView;
 public class EndGame extends AppCompatActivity {
 
     /**
-     * generuj układ graficzny
-     * wyświetl wyniki gracza odczytane z pliku
-     * wykonaj odpowiednią akcję w zależności od wciśniętego przycisku
+     * generuje układ graficzny,
+     * wyświetla wyniki gracza odczytane z pliku,
+     * wykonuje odpowiednią akcję w zależności od wciśniętego przycisku
      * @param savedInstanceState informacje o stanie instancji
      */
     @Override

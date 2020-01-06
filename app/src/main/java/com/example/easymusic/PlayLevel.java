@@ -16,7 +16,7 @@ public class PlayLevel extends Level {
     int lives = 3;
 
     /**
-     * generuj układ graficzny,
+     * generuje układ graficzny,
      * inicjacja poziomu
      * @param savedInstanceState informacje o stanie instancji
      */
@@ -30,7 +30,7 @@ public class PlayLevel extends Level {
     }
 
     /**
-     * funkcja sprawdzająca
+     * wywołuje funkcje sprawdzające
      * @param v naciśnięty klawisz
      */
     @Override

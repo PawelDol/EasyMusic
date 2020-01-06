@@ -11,8 +11,8 @@ import android.widget.Button;
 public class GameOver extends AppCompatActivity {
 
     /**
-     * generuj układ graficzny,
-     * wykonaj odpowiednią akcję w zależności od wybranej opcji
+     * generuje układ graficzny,
+     * wykonuje odpowiednią akcję w zależności od wybranej opcji
      * @param savedInstanceState informacje o stanie instancji
      */
     @Override

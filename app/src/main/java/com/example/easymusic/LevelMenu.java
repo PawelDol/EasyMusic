@@ -27,7 +27,7 @@ public class LevelMenu extends AppCompatActivity implements View.OnClickListener
             {"e","cis","e","fis","a","e","fis","e"},{"a","e","fis","gis","b","e","a","fis"}};
 
     /**
-     * generuj układ graficzny,
+     * generuje układ graficzny,
      * definicja przycisków i odczytanie danych z pliku
      * @param savedInstanceState informacje o stanie instancji
      */
@@ -58,7 +58,7 @@ public class LevelMenu extends AppCompatActivity implements View.OnClickListener
     }
 
     /**
-     * przejdź do odpowiedniej aktywności w zależności od wciśniętego przycisku
+     * przekierowanie do odpowiedniej aktywności w zależności od wciśniętego przycisku
      * @param v naciśnięty przycisk
      */
     @Override

@@ -38,7 +38,7 @@ public class FinalLevel extends Level {
     Timer timer = new Timer();
 
     /**
-     * generuj układ graficzny,
+     * generuje układ graficzny,
      * inicjacja poziomu,
      * inicjacja timera
      * @param savedInstanceState informacje o stanie instancji
@@ -70,7 +70,7 @@ public class FinalLevel extends Level {
     }
 
     /**
-     * funkcja sprawdzająca
+     * wywołuje funkcje sprawdzające
      * @param v naciśnięty klawisz
      */
     @Override
@@ -80,8 +80,8 @@ public class FinalLevel extends Level {
     }
 
     /**
-     * sprawdź poprawność zagranego dźwięku,
-     * wyświetl aktualny wynik
+     * sprawdzenie poprawności zagranego dźwięku,
+     * wyświetlenie aktualnego wyniku
      * @param v naciśnięty klawisz
      */
     public void check_sound(View v) {
@@ -107,9 +107,9 @@ public class FinalLevel extends Level {
     }
 
     /**
-     * zmień położenie kursora,
-     * określ aktualnie wskazywaną nutę,
-     * wykonaj odpowiednią akcję, gdy kursor znajdzie się na końcu ekranu
+     * zmiana położenia kursora,
+     * określenie aktualnie wskazywanej nuty,
+     * wykonuje odpowiednią akcję, gdy kursor znajdzie się na końcu ekranu
      */
     public void changeLoc(){
         ImageView cursor = findViewById(R.id.cursor);
@@ -181,7 +181,7 @@ public class FinalLevel extends Level {
         }
     }
 
-    /** wykonaj odpowiednią akcję po wybraniu opcji z menu pauzy i zatrzymaj timer
+    /** wykonuje odpowiednią akcję po wybraniu opcji z menu pauzy i zatrzymaj timer
      * @param item opcja wybrana w menu
      * @return true jeżeli wybrano opcję z menu
      */

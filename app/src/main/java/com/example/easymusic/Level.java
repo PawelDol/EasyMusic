@@ -91,7 +91,7 @@ public class Level extends AppCompatActivity implements View.OnClickListener, Po
 
     /**
      * odtworzenie dźwięku naciśniętego klawisza,
-     * wywołanie funkcji sprawdzającej
+     * wywołanie funkcji sprawdzających
      * @param v naciśnięty klawisz
      */
     @Override
@@ -145,7 +145,7 @@ public class Level extends AppCompatActivity implements View.OnClickListener, Po
     }
 
     /**
-     * funkcja sprawdzająca
+     * wywołaj funkcje sprawdzające
      * @param v naciśnięty klawisz
      */
     public void check(View v){}
