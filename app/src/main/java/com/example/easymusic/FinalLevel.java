@@ -119,10 +119,11 @@ public class FinalLevel extends Level {
         cursor.setX(location);
 
         // określ aktualnie wskazywaną nutę 
-        if (curr_note < level_notes.length) curr_note = Math.round((location/screen_width)*10)-1;
+        if (curr_note < level_notes.length) curr_note = Math.round((location/screen_width)*9)-1;
 
         // zwolnij flagę, gdy zmieni się aktualnie wskazywany dźwięk - daj graczowi możliwość zgrania dźwięku
-        if(curr_note!=(Math.round((location+screen_width/1000)/screen_width*10)-1)) flag = 0;
+        if(curr_note!=(Math.round((location+screen_width/1000)/screen_width*9)-1)) flag = 0;
+
 
         // wykonaj odpowiednią akcję
         if (location>=screen_width) {

@@ -12,7 +12,7 @@ import android.widget.Toast;
 /** menu główne, wybór poziomu */
 public class LevelMenu extends AppCompatActivity implements View.OnClickListener {
 
-    /** plik przchowujący dane */
+    /** plik przechowujący dane */
     public static final String DATA = "DataFile";
 
     /** liczba aktualnie odblokowanych pozimów */
